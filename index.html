@@ -21,6 +21,7 @@
   color-scheme:light;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{height:100%;margin:0}
 body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.5;
   padding-top:env(safe-area-inset-top,0px)}
@@ -55,6 +56,21 @@ body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17p
 .call .ph svg{width:22px;height:22px;fill:#fff}
 .call small{display:block;font-size:12px;color:var(--muted);line-height:1.2}
 .call b{display:block;font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.3}
+
+.install{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;gap:4px;
+  border:none;background:none;padding:0;cursor:pointer;font-family:var(--font);color:var(--ink)}
+.install .dl{width:56px;height:56px;border-radius:50%;background:var(--red);display:grid;place-items:center;
+  box-shadow:0 6px 18px -8px rgba(138,14,21,.8);border:2px solid var(--gold)}
+.install .dl svg{width:26px;height:26px;fill:#fff}
+.install span{font-size:13px;font-weight:700;background:var(--bg);padding:0 6px;border-radius:6px}
+.install:active .dl{transform:scale(.94)}
+
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;justify-content:center;z-index:10}
+.sheet-box{background:var(--surface);width:100%;max-width:520px;border-radius:20px 20px 0 0;padding:24px 20px calc(24px + env(safe-area-inset-bottom,0px))}
+.sheet-box h2{margin:0 0 12px;font-size:20px;font-weight:700}
+.sheet-box ol{margin:0;padding-left:22px;font-size:17px;line-height:1.8}
+.sheet-box b{color:var(--red)}
+.sheet-box button{margin-top:18px;width:100%;padding:14px;border:none;border-radius:12px;background:var(--red);color:#fff;font-size:17px;font-weight:700;font-family:var(--font)}
 </style>
 </head>
 <body>
@@ -86,8 +102,58 @@ body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17p
   <span><small>개발자 장보성</small><b>010-5198-1500</b></span>
 </a>
 
+<button class="install" id="install" type="button" aria-label="앱으로 저장">
+  <span class="dl"><svg viewBox="0 0 24 24"><path d="M11 3h2v9.6l3.3-3.3 1.4 1.4L12 16.4 6.3 10.7l1.4-1.4L11 12.6zM5 18h14v2H5z"/></svg></span>
+  <span>앱으로 저장</span>
+</button>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-box">
+    <h2 id="sheet-title">앱으로 저장하는 법</h2>
+    <ol id="sheet-steps"></ol>
+    <button type="button" id="sheet-close">확인</button>
+  </div>
+</div>
+
 <script>
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}
+
+var deferred=null;
+var btn=document.getElementById('install');
+var sheet=document.getElementById('sheet');
+var steps=document.getElementById('sheet-steps');
+var standalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+if(standalone){btn.hidden=true;}
+
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();deferred=e;});
+window.addEventListener('appinstalled',function(){btn.hidden=true;deferred=null;});
+
+function showGuide(){
+  var ua=navigator.userAgent;
+  var ios=/iPhone|iPad|iPod/i.test(ua);
+  var inApp=/KAKAOTALK|NAVER|Instagram|FBAN|FBAV|Line/i.test(ua);
+  var html;
+  if(inApp){
+    html='<li>지금은 카톡·앱 안에서 열려 있어요</li><li>오른쪽 위(또는 아래) <b>⋮ / 공유</b> 메뉴</li><li>'+(ios?'<b>Safari로 열기</b>':'<b>다른 브라우저로 열기 → Chrome</b>')+'</li><li>열린 화면에서 이 버튼을 다시 눌러주세요</li>';
+  }else if(ios){
+    html='<li>화면 아래 가운데 <b>공유 버튼(□↑)</b> 누르기</li><li>아래로 내려서 <b>홈 화면에 추가</b></li><li>오른쪽 위 <b>추가</b> 누르면 끝</li>';
+  }else{
+    html='<li>오른쪽 위 <b>⋮</b> 누르기</li><li><b>앱 설치</b> 또는 <b>홈 화면에 추가</b></li><li><b>설치</b> 누르면 끝</li>';
+  }
+  steps.innerHTML=html;
+  sheet.hidden=false;
+}
+
+btn.addEventListener('click',function(){
+  if(deferred){
+    deferred.prompt();
+    deferred.userChoice.then(function(r){if(r.outcome==='accepted'){btn.hidden=true;}deferred=null;});
+  }else{
+    showGuide();
+  }
+});
+document.getElementById('sheet-close').addEventListener('click',function(){sheet.hidden=true;});
+sheet.addEventListener('click',function(e){if(e.target===sheet)sheet.hidden=true;});
 </script>
 </body>
 </html>
