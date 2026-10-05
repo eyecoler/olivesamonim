@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>올리브짬뽕 리뷰함</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#B3121B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="올리브짬뽕">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* 한 화면 앱: 붉은 간판 → 큰 버튼 2개 → 왼쪽 아래 전화 버튼 */
+:root{
+  --bg:#FFF8F2; --surface:#FFFFFF; --ink:#1E1110; --muted:#5C4640;
+  --red:#B3121B; --red-deep:#8A0E15; --gold:#F2C230; --line:#E8D6CA;
+  --font:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.5;
+  padding-top:env(safe-area-inset-top,0px)}
+.app{min-height:100%;max-width:520px;margin:0 auto;padding:24px 18px 110px;display:flex;flex-direction:column;gap:24px}
+
+.sign{border-radius:20px;padding:30px 20px;text-align:center;background:var(--red);color:#FFFFFF;
+  box-shadow:0 10px 28px -14px rgba(138,14,21,.7);position:relative}
+.sign::before{content:"";position:absolute;inset:8px;border:2px solid var(--gold);border-radius:14px;pointer-events:none}
+.eyebrow{font-size:14px;letter-spacing:.12em;color:var(--gold);font-weight:500}
+.hero{font-size:clamp(34px,9.5vw,44px);font-weight:700;line-height:1.25;margin:10px 0 8px;letter-spacing:-.01em}
+.hero span{color:var(--gold)}
+.addr{font-size:15px;color:#FFE9E0}
+
+.buttons{display:grid;gap:16px}
+.btn{display:flex;align-items:center;gap:16px;padding:22px 18px;border-radius:18px;text-decoration:none;
+  background:var(--surface);color:var(--ink);border:2px solid var(--line);transition:transform .12s,border-color .12s}
+.btn:hover,.btn:focus-visible{border-color:var(--red);outline:none}
+.btn:active{transform:scale(.98)}
+.ico{flex:none;width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-size:24px;font-weight:700;color:#fff}
+.ico.blog{background:#03A94D}
+.ico.rcpt{background:var(--red)}
+.txt{min-width:0;flex:1}
+.txt strong{display:block;font-size:21px;font-weight:700}
+.txt span{display:block;font-size:16px;color:var(--muted);margin-top:2px}
+.arrow{flex:none;font-size:28px;color:var(--red);font-weight:500}
+
+.call{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;
+  text-decoration:none;color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:999px;padding:6px 16px 6px 6px;
+  box-shadow:0 6px 18px -10px rgba(0,0,0,.35)}
+.call:active{transform:scale(.97)}
+.call .ph{width:44px;height:44px;border-radius:50%;background:#1FA34A;display:grid;place-items:center}
+.call .ph svg{width:22px;height:22px;fill:#fff}
+.call small{display:block;font-size:12px;color:var(--muted);line-height:1.2}
+.call b{display:block;font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.3}
+</style>
+</head>
+<body>
+<main class="app">
+  <header class="sign">
+    <div class="eyebrow">간석동 올리브짬뽕</div>
+    <h1 class="hero">올리브짬뽕<br><span>파이팅!</span></h1>
+    <div class="addr">인천 남동구 남동대로 881 1층 6호</div>
+  </header>
+
+  <nav class="buttons">
+    <a class="btn" target="_blank" rel="noopener"
+       href="https://pcmap.place.naver.com/restaurant/2022325820/review/ugc?bk_query=%EC%98%AC%EB%A6%AC%EB%B8%8C%EC%A7%AC%EB%BD%95&entry=pll&fromNxList=true&fromPanelNum=2&locale=ko&searchText=%EC%98%AC%EB%A6%AC%EB%B8%8C%EC%A7%AC%EB%BD%95&svcName=map_pcv5&timestamp=202610051651&type=photoView&reviewSort=recent">
+      <div class="ico blog">B</div>
+      <div class="txt"><strong>블로그 리뷰</strong><span>최신순으로 보기</span></div>
+      <div class="arrow">›</div>
+    </a>
+    <a class="btn" target="_blank" rel="noopener"
+       href="https://pcmap.place.naver.com/restaurant/2022325820/review/visitor?bk_query=%EC%98%AC%EB%A6%AC%EB%B8%8C%EC%A7%AC%EB%BD%95&entry=pll&fromNxList=true&fromPanelNum=2&locale=ko&searchText=%EC%98%AC%EB%A6%AC%EB%B8%8C%EC%A7%AC%EB%BD%95&svcName=map_pcv5&timestamp=202610051651&type=photoView&reviewSort=recent">
+      <div class="ico rcpt">영</div>
+      <div class="txt"><strong>방문자 리뷰</strong><span>영수증 리뷰 · 최신순</span></div>
+      <div class="arrow">›</div>
+    </a>
+  </nav>
+</main>
+
+<a class="call" href="tel:01051981500" aria-label="개발자 장보성에게 전화">
+  <span class="ph"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></span>
+  <span><small>개발자 장보성</small><b>010-5198-1500</b></span>
+</a>
+
+<script>
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}
+</script>
+</body>
+</html>
